@@ -19,17 +19,17 @@
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;Catfish - The Party Game&lt;/title&gt;</p>
 <p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 1. Tailwind CSS for Styling --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 1. Tailwind CSS --&gt;</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.tailwindcss.com"&gt;&lt;/script&gt;</p>
 <p class="p2"><span class="Apple-converted-space">    </span></p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 2. React &amp; ReactDOM --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.production.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.production.min.js"&gt;&lt;/script&gt;</p>
 <p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 3. Babel for parsing JSX in the browser --&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://unpkg.com/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 3. Babel (Modern v7 via jsDelivr for reliability) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script crossorigin src="https://cdn.jsdelivr.net/npm/@babel/standalone/babel.min.js"&gt;&lt;/script&gt;</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 4. Firebase (Compat Version for easy HTML usage) --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- 4. Firebase (Compat Version) --&gt;</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"&gt;&lt;/script&gt;</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"&gt;&lt;/script&gt;</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"&gt;&lt;/script&gt;</p>
@@ -38,40 +38,58 @@
 <p class="p1"><span class="Apple-converted-space">        </span>body { font-family: system-ui, -apple-system, sans-serif; }</p>
 <p class="p1"><span class="Apple-converted-space">        </span>.fade-in { animation: fadeIn 0.5s ease-in; }</p>
 <p class="p1"><span class="Apple-converted-space">        </span>@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>/* Custom Scrollbar */</p>
+<p class="p1"><span class="Apple-converted-space">        </span>::-webkit-scrollbar { width: 8px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>::-webkit-scrollbar-track { background: #f1f1f1; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>::-webkit-scrollbar-thumb { background: #c7c7c7; border-radius: 4px; }</p>
+<p class="p1"><span class="Apple-converted-space">        </span>::-webkit-scrollbar-thumb:hover { background: #a0a0a0; }</p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
 <p class="p1">&lt;/head&gt;</p>
 <p class="p1">&lt;body class="bg-gray-50 text-gray-900 min-h-screen"&gt;</p>
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="root"&gt;&lt;/div&gt;</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="text/jsx"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- 1. CONFIGURATION -------------------------------------------</p>
-<p class="p1"><span class="Apple-converted-space">        </span>// REPLACE THESE VALUES WITH YOUR FIREBASE KEYS</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;!-- Use text/babel for Babel 7 --&gt;</p>
+<p class="p1"><span class="Apple-converted-space">    </span>&lt;script type="text/babel"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 1. CONFIGURATION &amp; INITIALIZATION -----------------</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// YOUR FIREBASE KEYS (Pre-filled)</p>
 <p class="p1"><span class="Apple-converted-space">        </span>const firebaseConfig = {</p>
-<p class="p1"><span class="Apple-converted-space">  </span>apiKey: "AIzaSyCNKOO0QlRX9eGnJLyoRqWrybnX6Y1wS4w",</p>
-<p class="p1"><span class="Apple-converted-space">  </span>authDomain: "catfish-f4dda.firebaseapp.com",</p>
-<p class="p1"><span class="Apple-converted-space">  </span>projectId: "catfish-f4dda",</p>
-<p class="p1"><span class="Apple-converted-space">  </span>storageBucket: "catfish-f4dda.firebasestorage.app",</p>
-<p class="p1"><span class="Apple-converted-space">  </span>messagingSenderId: "707632817388",</p>
-<p class="p1"><span class="Apple-converted-space">  </span>appId: "1:707632817388:web:2bbf8c6864d631334271c9",</p>
-<p class="p1"><span class="Apple-converted-space">  </span>measurementId: "G-20RBX8LBET"</p>
-<p class="p1">};</p>
+<p class="p1"><span class="Apple-converted-space">            </span>apiKey: "AIzaSyCNKOO0QlRX9eGnJLyoRqWrybnX6Y1wS4w",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>authDomain: "catfish-f4dda.firebaseapp.com",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>projectId: "catfish-f4dda",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>storageBucket: "catfish-f4dda.firebasestorage.app",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>messagingSenderId: "707632817388",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>appId: "1:707632817388:web:2bbf8c6864d631334271c9",</p>
+<p class="p1"><span class="Apple-converted-space">            </span>measurementId: "G-20RBX8LBET"</p>
+<p class="p1"><span class="Apple-converted-space">        </span>};</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// Initialize Firebase</p>
-<p class="p1"><span class="Apple-converted-space">        </span>firebase.initializeApp(firebaseConfig);</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const db = firebase.firestore();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const auth = firebase.auth();</p>
-<p class="p1"><span class="Apple-converted-space">        </span>const appId = 'catfish-web-party';</p>
+<p class="p1"><span class="Apple-converted-space">        </span>const appId = "catfish-public-game";<span class="Apple-converted-space"> </span></p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- 2. ICONS (Inline SVGs to avoid dependencies) --------------</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let db = null;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>let auth = null;</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (firebase.apps.length === 0) {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>firebase.initializeApp(firebaseConfig);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p1"><span class="Apple-converted-space">            </span>db = firebase.firestore();</p>
+<p class="p1"><span class="Apple-converted-space">            </span>auth = firebase.auth();</p>
+<p class="p1"><span class="Apple-converted-space">        </span>} catch (e) {</p>
+<p class="p1"><span class="Apple-converted-space">            </span>console.error("Firebase Init Error:", e);</p>
+<p class="p1"><span class="Apple-converted-space">        </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 2. ICONS ------------------------------------------</p>
 <p class="p1"><span class="Apple-converted-space">        </span>const Icons = {</p>
 <p class="p1"><span class="Apple-converted-space">            </span>Mask: () =&gt; &lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"&gt;&lt;path d="M5 16c0-3.5 2.5-6 5.5-6 2.5 0 4.5 1.5 5.5 3.5"/&gt;&lt;path d="M16 15c4 0 6.5-2.5 6.5-5.5S20 4 16 4c-2.5 0-4.5 1.5-5.5 3.5"/&gt;&lt;circle cx="16" cy="9" r="2"/&gt;&lt;circle cx="9" cy="14" r="2"/&gt;&lt;/svg&gt;,</p>
 <p class="p1"><span class="Apple-converted-space">            </span>User: () =&gt; &lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"&gt;&lt;path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/&gt;&lt;circle cx="12" cy="7" r="4"/&gt;&lt;/svg&gt;,</p>
 <p class="p1"><span class="Apple-converted-space">            </span>Trophy: () =&gt; &lt;svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"&gt;&lt;path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/&gt;&lt;path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/&gt;&lt;path d="M4 22h16"/&gt;&lt;path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/&gt;&lt;path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/&gt;&lt;path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/&gt;&lt;/svg&gt;,</p>
-<p class="p1"><span class="Apple-converted-space">            </span>Loader: () =&gt; &lt;svg className="animate-spin" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"&gt;&lt;path d="M21 12a9 9 0 1 1-6.219-8.56"/&gt;&lt;/svg&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Loader: () =&gt; &lt;svg className="animate-spin text-indigo-600" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"&gt;&lt;path d="M21 12a9 9 0 1 1-6.219-8.56"/&gt;&lt;/svg&gt;,</p>
+<p class="p1"><span class="Apple-converted-space">            </span>Alert: () =&gt; &lt;svg className="text-red-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"&gt;&lt;path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/&gt;&lt;path d="M12 9v4"/&gt;&lt;path d="M12 17h.01"/&gt;&lt;/svg&gt;</p>
 <p class="p1"><span class="Apple-converted-space">        </span>};</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- 3. GAME LOGIC ----------------------------------------------</p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- 3. GAME LOGIC -------------------------------------</p>
 <p class="p1"><span class="Apple-converted-space">        </span>const { useState, useEffect } = React;</p>
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">        </span>const PHASES = {</p>
@@ -103,8 +121,7 @@
 <p class="p1"><span class="Apple-converted-space">            </span>{ type: 'ADVICE', prompt: "Give bad relationship advice to a frantic caller." }</p>
 <p class="p1"><span class="Apple-converted-space">        </span>];</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">        </span>// --- Components ---</p>
-<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">        </span>// --- Helper Components ---</p>
 <p class="p1"><span class="Apple-converted-space">        </span>const Card = ({ children, className = "" }) =&gt; (</p>
 <p class="p1"><span class="Apple-converted-space">            </span>&lt;div className={`bg-white p-6 rounded-xl shadow-lg border-2 border-gray-100 ${className}`}&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                </span>{children}</p>
@@ -142,9 +159,15 @@
 <p class="p1"><span class="Apple-converted-space">                </span>&lt;div className="max-w-2xl mx-auto p-4"&gt;{children}&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">        </span>);</p>
+<p class="p2"><span class="Apple-converted-space">        </span></p>
+<p class="p1"><span class="Apple-converted-space">        </span>const ErrorMessage = ({ message }) =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;div className="fixed bottom-4 left-1/2 -translate-x-1/2 p-4 bg-red-600 text-white rounded-lg shadow-xl z-50 flex items-center gap-2 fade-in"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;Icons.Alert /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>&lt;span className="font-medium"&gt;{message}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">        </span>);</p>
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">        </span>// --- MAIN APP ---</p>
-<p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">        </span>function App() {</p>
 <p class="p1"><span class="Apple-converted-space">            </span>const [user, setUser] = useState(null);</p>
 <p class="p1"><span class="Apple-converted-space">            </span>const [roomCode, setRoomCode] = useState("");</p>
@@ -152,24 +175,42 @@
 <p class="p1"><span class="Apple-converted-space">            </span>const [gameState, setGameState] = useState(null);</p>
 <p class="p1"><span class="Apple-converted-space">            </span>const [realName, setRealName] = useState("");</p>
 <p class="p1"><span class="Apple-converted-space">            </span>const [loading, setLoading] = useState(false);</p>
+<p class="p1"><span class="Apple-converted-space">            </span>const [error, setError] = useState(null);</p>
 <p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>const handleClientError = (message) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                </span>console.error("Client Error:", message);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setError(message);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; setError(null), 5000);<span class="Apple-converted-space"> </span></p>
+<p class="p1"><span class="Apple-converted-space">            </span>}</p>
+<p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 1. Auth Check</p>
 <p class="p1"><span class="Apple-converted-space">            </span>useEffect(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>auth.signInAnonymously().catch(err =&gt; alert("Auth Error: " + err.message));</p>
-<p class="p1"><span class="Apple-converted-space">                </span>return auth.onAuthStateChanged(setUser);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!auth) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>handleClientError("Firebase services not initialized.");</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>return;</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>const unsubscribe = auth.onAuthStateChanged((currentUser) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (currentUser) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>setUser(currentUser);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>auth.signInAnonymously().catch(e =&gt; handleClientError("Auth failed: " + e.message));</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>return () =&gt; unsubscribe();</p>
 <p class="p1"><span class="Apple-converted-space">            </span>}, []);</p>
 <p class="p2"><br></p>
+<p class="p1"><span class="Apple-converted-space">            </span>// 2. Game Loop</p>
 <p class="p1"><span class="Apple-converted-space">            </span>useEffect(() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (!user || !joinedRoom || !roomCode) return;</p>
-<p class="p1"><span class="Apple-converted-space">                </span>// Using Compat Syntax (v8 style)</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!user || !joinedRoom || !roomCode || !db) return;</p>
 <p class="p1"><span class="Apple-converted-space">                </span>const unsubscribe = db.collection('artifacts').doc(appId).collection('rooms').doc(roomCode.toUpperCase())</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>.onSnapshot((doc) =&gt; {</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>if (doc.exists) setGameState(doc.data());</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}, err =&gt; console.log("Room sync error (ignore if creating):", err));</p>
 <p class="p1"><span class="Apple-converted-space">                </span>return () =&gt; unsubscribe();</p>
 <p class="p1"><span class="Apple-converted-space">            </span>}, [user, joinedRoom, roomCode]);</p>
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">            </span>const createRoom = async () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (!realName) return alert("Name required!");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!realName) return handleClientError("Name required!");</p>
 <p class="p1"><span class="Apple-converted-space">                </span>setLoading(true);</p>
 <p class="p1"><span class="Apple-converted-space">                </span>const code = Math.random().toString(36).substring(2, 8).toUpperCase();</p>
 <p class="p1"><span class="Apple-converted-space">                </span>const initialPlayer = {</p>
@@ -177,46 +218,55 @@
 <p class="p1"><span class="Apple-converted-space">                    </span>answers: {}, votes: {}, score: 0, deceptionScore: 0, isPenalized: false</p>
 <p class="p1"><span class="Apple-converted-space">                </span>};</p>
 <p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>await db.collection('artifacts').doc(appId).collection('rooms').doc(code).set({</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>code, phase: PHASES.LOBBY, players: [initialPlayer],</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>round: 1, icebreakerIdx: 0, createdAt: new Date().toISOString()</p>
-<p class="p1"><span class="Apple-converted-space">                </span>});</p>
-<p class="p1"><span class="Apple-converted-space">                </span>setRoomCode(code);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>setJoinedRoom(true);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>setLoading(false);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>await db.collection('artifacts').doc(appId).collection('rooms').doc(code).set({</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>code, phase: PHASES.LOBBY, players: [initialPlayer],</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>round: 1, icebreakerIdx: 0, createdAt: new Date().toISOString()</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>setRoomCode(code);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>setJoinedRoom(true);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} catch (e) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>handleClientError("Error creating room: " + e.message);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} finally {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>setLoading(false);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>}</p>
 <p class="p1"><span class="Apple-converted-space">            </span>};</p>
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">            </span>const joinRoom = async () =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (!realName || !roomCode) return alert("Name/Code required!");</p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (!realName || !roomCode) return handleClientError("Name/Code required!");</p>
 <p class="p1"><span class="Apple-converted-space">                </span>setLoading(true);</p>
 <p class="p1"><span class="Apple-converted-space">                </span>const code = roomCode.toUpperCase();</p>
 <p class="p1"><span class="Apple-converted-space">                </span>const ref = db.collection('artifacts').doc(appId).collection('rooms').doc(code);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const doc = await ref.get();</p>
 <p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (!doc.exists) { setLoading(false); return alert("Room not found"); }</p>
-<p class="p1"><span class="Apple-converted-space">                </span>const data = doc.data();</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (data.phase !== PHASES.LOBBY) { setLoading(false); return alert("Game started"); }</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (!data.players.some(p =&gt; p.id === user.uid)) {</p>
-<p class="p1"><span class="Apple-converted-space">                     </span>await ref.update({</p>
-<p class="p1"><span class="Apple-converted-space">                         </span>players: firebase.firestore.FieldValue.arrayUnion({</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>id: user.uid, realName, isHost: false, character: null,</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>answers: {}, votes: {}, score: 0, deceptionScore: 0, isPenalized: false</p>
-<p class="p1"><span class="Apple-converted-space">                         </span>})</p>
-<p class="p1"><span class="Apple-converted-space">                     </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                </span>try {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const doc = await ref.get();</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (!doc.exists) return handleClientError("Room not found");</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>const data = doc.data();</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (data.phase !== PHASES.LOBBY) return handleClientError("Game started");</p>
+<p class="p2"><span class="Apple-converted-space">                    </span></p>
+<p class="p1"><span class="Apple-converted-space">                    </span>if (!data.players.some(p =&gt; p.id === user.uid)) {</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>await ref.update({</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>players: firebase.firestore.FieldValue.arrayUnion({</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>id: user.uid, realName, isHost: false, character: null,</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>answers: {}, votes: {}, score: 0, deceptionScore: 0, isPenalized: false</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>})</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>setRoomCode(code);</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>setJoinedRoom(true);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} catch (e) {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>handleClientError("Error joining room: " + e.message);</p>
+<p class="p1"><span class="Apple-converted-space">                </span>} finally {</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>setLoading(false);</p>
 <p class="p1"><span class="Apple-converted-space">                </span>}</p>
-<p class="p1"><span class="Apple-converted-space">                </span>setRoomCode(code);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>setJoinedRoom(true);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>setLoading(false);</p>
 <p class="p1"><span class="Apple-converted-space">            </span>};</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// -- Render Logic --</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (!user) return &lt;div className="h-screen flex items-center justify-center"&gt;&lt;Icons.Loader /&gt; Loading...&lt;/div&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!user) return &lt;div className="h-screen flex flex-col gap-4 items-center justify-center text-gray-500"&gt;{error &amp;&amp; &lt;ErrorMessage message={error} /&gt;}&lt;Icons.Loader /&gt; Connecting...&lt;/div&gt;;</p>
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">            </span>if (!joinedRoom) {</p>
 <p class="p1"><span class="Apple-converted-space">                </span>return (</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>&lt;div className="min-h-screen bg-gradient-to-br from-indigo-500 to-purple-600 p-4 flex items-center justify-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{error &amp;&amp; &lt;ErrorMessage message={error} /&gt;}</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>&lt;Card className="max-w-md w-full text-center"&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="inline-block p-4 bg-indigo-100 rounded-full mb-4 text-indigo-600"&gt;&lt;Icons.Mask /&gt;&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>&lt;h1 className="text-4xl font-black mb-2"&gt;CATFISH&lt;/h1&gt;</p>
@@ -232,45 +282,42 @@
 <p class="p1"><span class="Apple-converted-space">                </span>);</p>
 <p class="p1"><span class="Apple-converted-space">            </span>}</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>if (!gameState) return &lt;div className="p-8 text-center"&gt;Connecting...&lt;/div&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>if (!gameState) return &lt;div className="p-8 text-center flex flex-col items-center gap-4"&gt;{error &amp;&amp; &lt;ErrorMessage message={error} /&gt;}&lt;Icons.Loader /&gt; Loading Room...&lt;/div&gt;;</p>
 <p class="p2"><span class="Apple-converted-space">            </span></p>
 <p class="p1"><span class="Apple-converted-space">            </span>const me = gameState.players.find(p =&gt; p.id === user.uid);</p>
 <p class="p1"><span class="Apple-converted-space">            </span>const roomRef = db.collection('artifacts').doc(appId).collection('rooms').doc(roomCode);</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 1. LOBBY</p>
 <p class="p1"><span class="Apple-converted-space">            </span>if (gameState.phase === PHASES.LOBBY) {</p>
 <p class="p1"><span class="Apple-converted-space">                </span>return (</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>&lt;GameLayout title="Lobby" code={roomCode}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{error &amp;&amp; &lt;ErrorMessage message={error} /&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="text-center mb-8 text-gray-500"&gt;Waiting for players to join...&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="grid grid-cols-2 gap-4 mb-8"&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>{gameState.players.map(p =&gt; (</p>
 <p class="p1"><span class="Apple-converted-space">                                </span>&lt;div key={p.id} className="flex items-center gap-2 p-3 bg-white rounded shadow"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>{p.isHost ? &lt;Icons.Trophy /&gt; : &lt;Icons.User /&gt;}</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span&gt;{p.realName}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>{p.isHost ? &lt;span className="text-indigo-600"&gt;&lt;Icons.Trophy /&gt;&lt;/span&gt; : &lt;span className="text-gray-400"&gt;&lt;Icons.User /&gt;&lt;/span&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span className="font-bold"&gt;{p.realName}&lt;/span&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>))}</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>{me?.isHost &amp;&amp; &lt;Button onClick={() =&gt; roomRef.update({phase: PHASES.CHAR_CREATION})} disabled={gameState.players.length &lt; 3}&gt;Start Game (Need 3+)&lt;/Button&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{me?.isHost &amp;&amp; &lt;Button onClick={() =&gt; roomRef.update({phase: PHASES.CHAR_CREATION})} disabled={gameState.players.length &lt; 3}&gt;{gameState.players.length &lt; 3 ? "Need 3+ Players" : "Start Game"}&lt;/Button&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{!me?.isHost &amp;&amp; &lt;div className="text-center text-sm text-gray-400"&gt;Host will start the game...&lt;/div&gt;}</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>&lt;/GameLayout&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                </span>);</p>
 <p class="p1"><span class="Apple-converted-space">            </span>}</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 2. CHARACTER CREATION</p>
 <p class="p1"><span class="Apple-converted-space">            </span>if (gameState.phase === PHASES.CHAR_CREATION) {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if (me.character) return &lt;GameLayout title="Creating..."&gt;&lt;div className="text-center p-12"&gt;Submitted! Waiting...&lt;/div&gt;&lt;/GameLayout&gt;;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if (me.character) return &lt;GameLayout title="Creating..."&gt;&lt;div className="text-center p-12"&gt;&lt;div className="text-4xl mb-4"&gt;🎭&lt;/div&gt;Submitted! Waiting for others...&lt;/div&gt;&lt;/GameLayout&gt;;</p>
 <p class="p1"><span class="Apple-converted-space">                </span>return (</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>&lt;GameLayout title="Create Identity"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{error &amp;&amp; &lt;ErrorMessage message={error} /&gt;}</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>&lt;Card&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>&lt;h2 className="font-bold mb-4"&gt;Who are you faking?&lt;/h2&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>&lt;input className="w-full border p-2 rounded mb-4" placeholder="Fake Name" id="charName" /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;textarea className="w-full border p-2 rounded mb-4" placeholder="Backstory..." id="charBio" /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;textarea className="w-full border p-2 rounded mb-4" placeholder="Backstory..." id="charBio" rows="3" /&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>&lt;Button onClick={() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>const char = {</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>name: document.getElementById('charName').value,</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>bio: document.getElementById('charBio').value,</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>color: 'bg-blue-200' // keeping it simple</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>};</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>if(!char.name || !char.bio) return;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>const char = { name: document.getElementById('charName').value, bio: document.getElementById('charBio').value, color: 'bg-blue-200' };</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>if(!char.name || !char.bio) return handleClientError("Please provide a name and backstory.");</p>
 <p class="p1"><span class="Apple-converted-space">                                </span>const updated = gameState.players.map(p =&gt; p.id === user.uid ? {...p, character: char} : p);</p>
 <p class="p1"><span class="Apple-converted-space">                                </span>const allDone = updated.every(p =&gt; p.character);</p>
 <p class="p1"><span class="Apple-converted-space">                                </span>roomRef.update({ players: updated, phase: allDone ? PHASES.R1_ICEBREAKER : PHASES.CHAR_CREATION });</p>
@@ -280,19 +327,20 @@
 <p class="p1"><span class="Apple-converted-space">                </span>)</p>
 <p class="p1"><span class="Apple-converted-space">            </span>}</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 3. ICEBREAKER</p>
 <p class="p1"><span class="Apple-converted-space">            </span>if (gameState.phase === PHASES.R1_ICEBREAKER) {</p>
 <p class="p1"><span class="Apple-converted-space">                </span>return (</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>&lt;GameLayout title="Icebreaker"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;Card className="mb-4 text-center"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{error &amp;&amp; &lt;ErrorMessage message={error} /&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;Card className="mb-4 text-center border-indigo-200 bg-indigo-50"&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>&lt;h2 className="text-xl font-bold text-indigo-900"&gt;{ICEBREAKERS[gameState.icebreakerIdx || 0]}&lt;/h2&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>&lt;/Card&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>{me.answers?.r1 ? &lt;div className="text-center text-gray-500"&gt;Answer submitted...&lt;/div&gt; : (</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>&lt;div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;textarea id="ans" className="w-full p-3 border rounded mb-4" placeholder="Answer in character..." /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div className="mb-2 text-sm font-bold text-gray-400"&gt;ANSWER AS {me.character.name}:&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;textarea id="ans" className="w-full p-3 border rounded mb-4" placeholder="Type something larger than life..." /&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                                </span>&lt;Button onClick={() =&gt; {</p>
 <p class="p1"><span class="Apple-converted-space">                                    </span>const val = document.getElementById('ans').value;</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>if(!val) return;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>if(!val) return handleClientError("Answer cannot be empty.");</p>
 <p class="p1"><span class="Apple-converted-space">                                    </span>const updated = gameState.players.map(p =&gt; p.id === user.uid ? {...p, answers: {...p.answers, r1: val}} : p);</p>
 <p class="p1"><span class="Apple-converted-space">                                    </span>const allDone = updated.every(p =&gt; p.answers?.r1);</p>
 <p class="p1"><span class="Apple-converted-space">                                    </span>roomRef.update({ players: updated, phase: allDone ? PHASES.R1_VOTING : PHASES.R1_ICEBREAKER });</p>
@@ -303,121 +351,121 @@
 <p class="p1"><span class="Apple-converted-space">                </span>)</p>
 <p class="p1"><span class="Apple-converted-space">            </span>}</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 4. VOTING (Simplified for HTML version)</p>
 <p class="p1"><span class="Apple-converted-space">            </span>if (gameState.phase === PHASES.R1_VOTING || gameState.phase === PHASES.R2_VOTING) {</p>
 <p class="p1"><span class="Apple-converted-space">                </span>const round = gameState.phase === PHASES.R1_VOTING ? 'r1' : 'r2';</p>
-<p class="p1"><span class="Apple-converted-space">                </span>if(me.votes?.[round]) return &lt;GameLayout title="Voting"&gt;&lt;div className="text-center p-12"&gt;Votes Cast!&lt;/div&gt;&lt;/GameLayout&gt;;</p>
-<p class="p2"><span class="Apple-converted-space">                </span></p>
+<p class="p1"><span class="Apple-converted-space">                </span>if(me.votes?.[round]) return &lt;GameLayout title="Voting"&gt;&lt;div className="text-center p-12"&gt;Votes Cast! Waiting for results...&lt;/div&gt;&lt;/GameLayout&gt;;</p>
 <p class="p1"><span class="Apple-converted-space">                </span>const others = gameState.players.filter(p =&gt; p.id !== user.uid);</p>
-<p class="p1"><span class="Apple-converted-space">                </span>// Using simple prompt/alert style for voting in this lightweight version</p>
-<p class="p1"><span class="Apple-converted-space">                </span>// or basic HTML selects</p>
 <p class="p1"><span class="Apple-converted-space">                </span>return (</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>&lt;GameLayout title="Voting Booth"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                         </span>{me.isPenalized &amp;&amp; &lt;div className="bg-red-100 p-2 mb-4 text-red-700 font-bold"&gt;PENALTY ACTIVE: Some votes might be random!&lt;/div&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>{error &amp;&amp; &lt;ErrorMessage message={error} /&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                         </span>{me.isPenalized &amp;&amp; &lt;div className="bg-red-100 p-2 mb-4 text-red-700 font-bold text-center rounded"&gt;⚠️ PENALTY ACTIVE: Some votes might be random!&lt;/div&gt;}</p>
 <p class="p1"><span class="Apple-converted-space">                         </span>&lt;Card&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p className="mb-4 font-bold"&gt;Match Players to Characters:&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p className="mb-4 font-bold text-indigo-800 border-b pb-2"&gt;Match Players to Characters:&lt;/p&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                             </span>{others.map(op =&gt; (</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;div key={op.id} className="mb-2 border-b pb-2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                     </span>&lt;p className="text-sm text-gray-500"&gt;{op.realName} is...&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                     </span>&lt;select className="w-full border p-2 vote-select" data-id={op.id}&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                         </span>&lt;option value=""&gt;Select...&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;div key={op.id} className="mb-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                     </span>&lt;p className="text-sm font-bold text-gray-600 mb-1"&gt;{op.realName} is...&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                     </span>&lt;select className="w-full border p-3 rounded bg-gray-50 vote-select" data-id={op.id}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                         </span>&lt;option value=""&gt;Select Identity...&lt;/option&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                                         </span>{gameState.players.map(c =&gt; &lt;option key={c.character.name} value={c.character.name}&gt;{c.character.name}&lt;/option&gt;)}</p>
 <p class="p1"><span class="Apple-converted-space">                                     </span>&lt;/select&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                                 </span>&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                             </span>))}</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p className="mt-4 mb-2 font-bold"&gt;Least Realistic Character:&lt;/p&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>&lt;select className="w-full border p-2 mb-4" id="leastReal"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;option value=""&gt;Select...&lt;/option&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p className="mt-6 mb-2 font-bold text-pink-600 border-b pb-2"&gt;Least Realistic Character:&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;select className="w-full border p-3 rounded bg-pink-50" id="leastReal"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                 </span>&lt;option value=""&gt;Select Character...&lt;/option&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                                 </span>{gameState.players.filter(c =&gt; c.id !== user.uid).map(c =&gt; &lt;option key={c.character.name} value={c.character.name}&gt;{c.character.name}&lt;/option&gt;)}</p>
 <p class="p1"><span class="Apple-converted-space">                             </span>&lt;/select&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>&lt;Button onClick={() =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>const selects = document.querySelectorAll('.vote-select');</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>const guesses = {};</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>selects.forEach(s =&gt; guesses[s.dataset.id] = s.value);</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>const least = document.getElementById('leastReal').value;</p>
-<p class="p2"><span class="Apple-converted-space">                                 </span></p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>// Simple check</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>if(!least || Object.values(guesses).some(v =&gt; !v)) return alert("Fill all votes!");</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>const voteData = { guesses, leastReal: least };</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>const updated = gameState.players.map(p =&gt; p.id === user.uid ? {...p, votes: {...(p.votes||{}), [round]: voteData}} : p);</p>
-<p class="p2"><span class="Apple-converted-space">                                 </span></p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>const allDone = updated.every(p =&gt; p.votes?.[round]);</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>const next = round === 'r1' ? PHASES.R1_RESULTS : PHASES.FINAL_REVEAL;</p>
-<p class="p2"><span class="Apple-converted-space">                                 </span></p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>// If everyone voted, host would usually calc results.<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>// For simplicity in this No-Build version, we jump straight to next phase</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>// (In a real game, you'd add the calculation logic here similar to the React app)</p>
-<p class="p2"><span class="Apple-converted-space">                                 </span></p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>// Quick Calc injection for Host</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>if (allDone &amp;&amp; me.isHost) {</p>
-<p class="p1"><span class="Apple-converted-space">                                     </span>// Basic Scoring Logic</p>
-<p class="p1"><span class="Apple-converted-space">                                     </span>updated.forEach(p =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                                         </span>let score = 0;</p>
-<p class="p1"><span class="Apple-converted-space">                                         </span>const v = p.votes[round];</p>
-<p class="p1"><span class="Apple-converted-space">                                         </span>Object.entries(v.guesses).forEach(([targetId, guess]) =&gt; {</p>
-<p class="p1"><span class="Apple-converted-space">                                             </span>const target = updated.find(t =&gt; t.id === targetId);</p>
-<p class="p1"><span class="Apple-converted-space">                                             </span>if(target.character.name === guess) score += 10;</p>
-<p class="p1"><span class="Apple-converted-space">                                         </span>});</p>
-<p class="p1"><span class="Apple-converted-space">                                         </span>p.score = (p.score || 0) + score;</p>
-<p class="p1"><span class="Apple-converted-space">                                     </span>});</p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">                                 </span>roomRef.update({ players: updated, phase: allDone ? next : gameState.phase });</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>}}&gt;Submit Ballot&lt;/Button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div className="mt-6"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;Button onClick={() =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>const selects = document.querySelectorAll('.vote-select');</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>const guesses = {};</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>selects.forEach(s =&gt; guesses[s.dataset.id] = s.value);</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>const least = document.getElementById('leastReal').value;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>if(!least || Object.values(guesses).some(v =&gt; !v)) return handleClientError("Please fill out all votes!");</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>const voteData = { guesses, leastReal: least };</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>const updated = gameState.players.map(p =&gt; p.id === user.uid ? {...p, votes: {...(p.votes||{}), [round]: voteData}} : p);</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>const allDone = updated.every(p =&gt; p.votes?.[round]);</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>const next = round === 'r1' ? PHASES.R2_GAMES : PHASES.FINAL_REVEAL;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>if (allDone &amp;&amp; me.isHost) {</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>const updatedPlayers = updated.map(p =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>let score = p.score || 0;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>const v = p.votes[round];</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>Object.entries(v.guesses).forEach(([targetId, guess]) =&gt; {</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>const target = updated.find(t =&gt; t.id === targetId);</p>
+<p class="p1"><span class="Apple-converted-space">                                                </span>if(target &amp;&amp; target.character.name === guess) score += 10;</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                                            </span>return { ...p, score };</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>});</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>roomRef.update({ players: updatedPlayers, phase: next });</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>} else {</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>roomRef.update({ players: updated, phase: allDone ? next : gameState.phase });</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>}</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>}}&gt;Submit Ballot&lt;/Button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                         </span>&lt;/Card&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>&lt;/GameLayout&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                </span>)</p>
 <p class="p1"><span class="Apple-converted-space">            </span>}</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 5. RESULTS / REVEAL</p>
 <p class="p1"><span class="Apple-converted-space">            </span>if (gameState.phase === PHASES.R1_RESULTS || gameState.phase === PHASES.FINAL_REVEAL) {</p>
 <p class="p1"><span class="Apple-converted-space">                </span>const winners = [...gameState.players].sort((a,b) =&gt; b.score - a.score);</p>
 <p class="p1"><span class="Apple-converted-space">                </span>return (</p>
-<p class="p1"><span class="Apple-converted-space">                    </span>&lt;GameLayout title="Results"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                    </span>&lt;GameLayout title={gameState.phase === PHASES.R1_RESULTS ? "Round 1 Results" : "Final Reveal"}&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{error &amp;&amp; &lt;ErrorMessage message={error} /&gt;}</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>&lt;Card className="text-center mb-4 bg-yellow-50 border-yellow-200"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>&lt;Icons.Trophy /&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>&lt;h2 className="text-xl font-bold mt-2"&gt;Leader: {winners[0].realName}&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p&gt;{winners[0].score} Points&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;span className="text-yellow-600"&gt;&lt;Icons.Trophy /&gt;&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;h2 className="text-xl font-bold mt-2"&gt;Current Leader&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;div className="text-2xl font-black"&gt;{winners[0].realName}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p className="text-sm text-gray-500"&gt;{winners[0].score} Points&lt;/p&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>&lt;/Card&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>{gameState.phase === PHASES.R1_RESULTS &amp;&amp; me.isHost &amp;&amp; (</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>&lt;Button onClick={() =&gt; roomRef.update({phase: PHASES.R2_GAMES})}&gt;Start Round 2&lt;/Button&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>)}</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>{gameState.phase === PHASES.FINAL_REVEAL &amp;&amp; (</p>
-<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="bg-white p-4 rounded shadow"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h3 className="font-bold border-b pb-2 mb-2"&gt;Identities Revealed&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;div className="bg-white p-4 rounded shadow space-y-2"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;h3 className="font-bold border-b pb-2 mb-2 text-gray-400 text-xs uppercase tracking-wider"&gt;Identity Log&lt;/h3&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                                </span>{gameState.players.map(p =&gt; (</p>
-<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div key={p.id} className="flex justify-between py-1"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;span&gt;{p.realName}&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;span className="text-indigo-600 font-bold"&gt;{p.character.name}&lt;/span&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;div key={p.id} className="flex justify-between items-center py-2 border-b last:border-0"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;div className="text-right w-1/2 pr-4 font-bold border-r"&gt;{p.realName}&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                        </span>&lt;div className="text-left w-1/2 pl-4 text-indigo-600 font-bold"&gt;{p.character.name}&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                                    </span>&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                                </span>))}</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>)}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{gameState.phase === PHASES.R1_RESULTS &amp;&amp; !me.isHost &amp;&amp; &lt;div className="text-center text-gray-400"&gt;Waiting for host...&lt;/div&gt;}</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>&lt;/GameLayout&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                </span>)</p>
 <p class="p1"><span class="Apple-converted-space">            </span>}</p>
 <p class="p2"><span class="Apple-converted-space">            </span></p>
-<p class="p1"><span class="Apple-converted-space">            </span>// 6. ROUND 2 (Simple Prompt)</p>
 <p class="p1"><span class="Apple-converted-space">            </span>if (gameState.phase === PHASES.R2_GAMES) {</p>
 <p class="p1"><span class="Apple-converted-space">                </span>return (</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>&lt;GameLayout title="Round 2"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;Card className="mb-4"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>&lt;h2 className="font-bold text-indigo-600"&gt;Challenge&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p className="text-xl"&gt;{MINIGAMES[0].prompt}&lt;/p&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>{error &amp;&amp; &lt;ErrorMessage message={error} /&gt;}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;Card className="mb-4 border-pink-200 bg-pink-50"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;h2 className="font-bold text-pink-600 mb-1"&gt;CHALLENGE&lt;/h2&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                             </span>&lt;p className="text-xl font-bold"&gt;{MINIGAMES[0].prompt}&lt;/p&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>&lt;/Card&gt;</p>
-<p class="p1"><span class="Apple-converted-space">                        </span>&lt;textarea id="r2resp" className="w-full border p-3 rounded mb-4" placeholder="Response..." /&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;textarea id="r2resp" className="w-full border p-3 rounded mb-4" rows="3" placeholder="Type your response in character..." /&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>&lt;Button onClick={() =&gt; {</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>const val = document.getElementById('r2resp').value;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>if (!val) return handleClientError("Response cannot be empty.");</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>const updated = gameState.players.map(p =&gt; p.id === user.uid ? {...p, r2Action: val} : p);</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>const allDone = updated.every(p =&gt; p.r2Action);</p>
 <p class="p1"><span class="Apple-converted-space">                            </span>roomRef.update({ players: updated, phase: allDone ? PHASES.R2_VOTING : PHASES.R2_GAMES });</p>
 <p class="p1"><span class="Apple-converted-space">                        </span>}}&gt;Submit&lt;/Button&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;div className="mt-8 space-y-4"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>&lt;h3 className="font-bold text-gray-400 text-xs uppercase"&gt;Responses so far:&lt;/h3&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>{gameState.players.filter(p =&gt; p.r2Action).map(p =&gt; (</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;div key={p.id} className="bg-white p-3 rounded shadow text-sm"&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                                    </span>&lt;span className="font-bold text-indigo-600"&gt;{p.character.name}:&lt;/span&gt; "{p.r2Action}"</p>
+<p class="p1"><span class="Apple-converted-space">                                </span>&lt;/div&gt;</p>
+<p class="p1"><span class="Apple-converted-space">                            </span>))}</p>
+<p class="p1"><span class="Apple-converted-space">                        </span>&lt;/div&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                    </span>&lt;/GameLayout&gt;</p>
 <p class="p1"><span class="Apple-converted-space">                </span>)</p>
 <p class="p1"><span class="Apple-converted-space">            </span>}</p>
 <p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">            </span>return &lt;div&gt;Phase {gameState.phase} not fully implemented in lite version.&lt;/div&gt;;</p>
+<p class="p1"><span class="Apple-converted-space">            </span>return &lt;div&gt;{error &amp;&amp; &lt;ErrorMessage message={error} /&gt;}Phase {gameState.phase} not fully implemented in lite version.&lt;/div&gt;;</p>
 <p class="p1"><span class="Apple-converted-space">        </span>}</p>
 <p class="p2"><br></p>
 <p class="p1"><span class="Apple-converted-space">        </span>const root = ReactDOM.createRoot(document.getElementById('root'));</p>
